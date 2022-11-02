@@ -1,11 +1,64 @@
+.App{
+    display: flex;
+    flex-direction: column;
+}
 h1{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-size: 50px;
     text-align: center;
-    color: rgb(81, 214, 81);
+    color: rgb(136, 110, 40);
 }
-
-.greetingMsg{
+h5{
     text-align: center;
-    color: rgb(81, 214, 81);
+    padding:30px;
+    font-size: 20px;
+    color: rgb(136, 110, 40);
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
-
+.navbar-nav a, .navbar-brand a{
+    padding: 20px;
+    text-decoration: none;
+    color:black;
+}
+.card {
+    width: 50%;
+    display: flex;
+    float: left;
+    flex-direction: column;
+    padding: 10px;
+}
+.card-text, .card-title{
+    text-align: center;
+    font-size: 20px;
+    font-weight: bolder;
+    color:black;
+}
+.card-price{
+    text-align: center;
+    font-size: 18px;
+    color:black;
+}
+.productDetailContainer{
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+}
+.addtocart{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.btn-buy{
+    margin-top: 10px;
+    width: 20%;
+}
+.counter-input{
+    width: 20%;
+    text-align: center;
+}
+#footer{
+    text-align: center;
+    font-size: 14px;
+    padding: 40px;
+    font-weight: bold;
+}

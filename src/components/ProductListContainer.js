@@ -4,15 +4,14 @@ import Loader from "./Loader"
 import { useEffect, useState } from "react"
 
 
-
-const ItemListContainer=()=>{
+const ProductListContainer=()=>{
     const [products, setProducts] = useState([])
 
     useEffect(()=>{
         setTimeout(()=>{
             const mainPageProducts = data.map((category)=>{
                 return category.products
-            }).flat().filter((prod)=> prod.mainPage == true)
+            }).flat()
 
             setProducts(mainPageProducts)
         },1000)
@@ -23,8 +22,8 @@ const ItemListContainer=()=>{
             !products.length ? 
                 <Loader/>
             :
-               <div>
-                    <h5>EDICIÓN ESPECIAL</h5>
+               <div className="productlist">
+                    <h5>TODOS LOS PRODUCTOS</h5>
                     {
                         products.map((prod)=>{
                             return <ItemList product={prod} />
@@ -35,4 +34,4 @@ const ItemListContainer=()=>{
     </>
 }
 
-export default ItemListContainer
+export default ProductListContainer
