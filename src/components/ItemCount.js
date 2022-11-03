@@ -4,7 +4,7 @@ const ItemCount = (props) =>{
         props.handleChange(parseInt(e.target.value))
     }
 
-    return <input className="counter-input" type="number" value={props.num} onChange={(e)=>handleChange(e)}/> 
+    return <input min={1} className="counter-input" type="number" value={props.num} onChange={(e)=>handleChange(e)}/> 
            
 }
 

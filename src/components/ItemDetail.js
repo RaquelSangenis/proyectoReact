@@ -2,7 +2,7 @@ import { useState } from "react"
 import ItemCount from "./ItemCount"
 
 const ItemDetail = ({info}) => {
-    const [totalCount, setTotalCount] = useState(0)
+    const [totalCount, setTotalCount] = useState(1)
 
     const handleCount = (count) => {
         setTotalCount(count)
