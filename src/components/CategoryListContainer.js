@@ -5,10 +5,11 @@ import { useContext } from 'react';
 
 const CategoryListContainer=()=>{
     const [info, setInfo] = useState([])
-    const categories = useContext(DataContext);  
+    const categories = useContext(DataContext)
+    
     useEffect(()=>{
         setInfo(categories)
-    },[])
+    },[categories])
 
     return <>
     {

@@ -6,14 +6,14 @@ import { useContext } from 'react';
 
 const ProductListContainer=()=>{
     const [products, setProducts] = useState([])
+    const categories = useContext(DataContext)
 
-    const categories = useContext(DataContext);  
     useEffect(()=>{
         const prods = categories.map((cat)=>{
             return cat.products
         }).flat()
         setProducts(prods)
-    },[])
+    },[categories])
 
     return <>
         {

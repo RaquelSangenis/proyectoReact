@@ -8,24 +8,25 @@ import Loader from './Loader';
 const CategoryProducts = () => {
 
     const {id} = useParams()
-
-    const [info, setInfo] = useState(useContext(DataContext))
+    const info = useContext(DataContext)
     const [category, setCategory] = useState({})
 
     useEffect(()=>{
-        const cat = info.find((categ)=>categ.id == id);
-        setCategory(cat)
-    }, [])
+        if (info.length) {
+            const cat = info.find((categ)=>categ.id === id);
+            setCategory(cat)
+        }
+    }, [info, id])
     
     
-    if (!Object.keys(category).length)
+    if (!category || !Object.keys(category).length)
         return <Loader />
 
     return <div>
                 <h1>{category.category}</h1>
                 {
                     category.products.map((prod)=>{
-                        return <ItemList product={prod} />
+                        return <ItemList key={prod.id} product={prod} />
                     })
                 }
             </div>

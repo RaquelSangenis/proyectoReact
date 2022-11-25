@@ -16,7 +16,7 @@ const ItemListContainer = () => {
                 prods.push(cat.data().products)
             })
             prods = prods.flat()
-            const destacados = prods.filter((prod)=> prod.mainPage == true)
+            const destacados = prods.filter((prod)=> prod.mainPage === true)
             setProducts(destacados)
         }
        
