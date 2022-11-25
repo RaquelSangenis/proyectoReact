@@ -1,21 +1,26 @@
-import  data from "../data/index.json"
 import ItemList from "./ItemList"
 import Loader from "./Loader"
 import { useEffect, useState } from "react"
+import {db} from "./firebase"
+import {collection, getDocs} from "firebase/firestore"
 
-
-
-const ItemListContainer=()=>{
+const ItemListContainer = () => {
+    
     const [products, setProducts] = useState([])
 
     useEffect(()=>{
-        setTimeout(()=>{
-            const mainPageProducts = data.map((category)=>{
-                return category.products
-            }).flat().filter((prod)=> prod.mainPage == true)
-
-            setProducts(mainPageProducts)
-        },1000)
+        async function getData(){
+            const querySnapshot = await getDocs(collection(db, "categories"));
+            let prods = []
+            querySnapshot.forEach((cat) => {
+                prods.push(cat.data().products)
+            })
+            prods = prods.flat()
+            const destacados = prods.filter((prod)=> prod.mainPage == true)
+            setProducts(destacados)
+        }
+       
+        getData()
     },[])
 
     return <>
@@ -24,10 +29,10 @@ const ItemListContainer=()=>{
                 <Loader/>
             :
                <div>
-                    <h5>EDICIÓN ESPECIAL</h5>
+                    <h5>PRODUCTOS DESTACADOS</h5>
                     {
                         products.map((prod)=>{
-                            return <ItemList product={prod} />
+                            return <ItemList key={prod.id} product={prod} />
                         })
                     }
                 </div>

@@ -1,5 +1,5 @@
 function Header() {
-    return <h1>MI TIENDA</h1>
+    return <h1>Mi Tienda Online</h1>
 }
 
 export default Header

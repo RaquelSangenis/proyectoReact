@@ -1,12 +1,13 @@
 import { useParams } from "react-router"
-import  data from "../data/index.json"
 import ItemDetail from "./ItemDetail"
-
+import { DataContext } from "../App";
+import { useContext } from 'react';
 
 const ItemDetailContainer=()=>{
     const {productid} = useParams()
+    const categories = useContext(DataContext);  
 
-    const product = data.map((category)=>{
+    const product = categories.map((category)=>{
         return category.products
     }).flat().find((prod)=>prod.id == parseInt(productid))
     

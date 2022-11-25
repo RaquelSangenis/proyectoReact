@@ -16,7 +16,7 @@ function Navbar() {
               <Link to="/categories">Categorias</Link>
               <Link to="/products">Productos</Link>
             </Nav>
-          <CartWidget/>
+          <CartWidget />
         </Container>
       </BootstrapNavbar>
     </>

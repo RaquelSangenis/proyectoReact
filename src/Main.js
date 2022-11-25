@@ -5,6 +5,7 @@ import CategoryListContainer from "./components/CategoryListContainer"
 import ItemListContainer from "./components/ItemListContainer";
 import CategoryProducts from "./components/CategoryProducts";
 import ProductListContainer from "./components/ProductListContainer";
+import Cart from "./components/Cart";
 
 const Main = () =>{
     return(  
@@ -15,6 +16,7 @@ const Main = () =>{
                 <Route path="/products" element={<ProductListContainer/>}/>
                 <Route path="/product/:productid" element={<ItemDetailContainer/>}/>
                 <Route path="/category/:id" element={<CategoryProducts/>}/>
+                <Route path="/cart" element={<Cart/>}/>
             </Routes>  
         </main>
     )

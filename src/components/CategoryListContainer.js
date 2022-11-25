@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react"
-import data from "../data/index.json"
 import CategoryCard from "./CategoryCard"
-
+import { DataContext } from "../App";
+import { useContext } from 'react';
 
 const CategoryListContainer=()=>{
     const [info, setInfo] = useState([])
-    
+    const categories = useContext(DataContext);  
     useEffect(()=>{
-        setInfo(data)
+        setInfo(categories)
     },[])
 
     return <>
     {
         info.map((category)=>{
-            return <CategoryCard key={category.id} category={category}/>
+            return <CategoryCard key={category.category} category={category}/>
         })
     }
     
