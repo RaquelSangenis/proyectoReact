@@ -1,26 +1,23 @@
 import { useState, useEffect } from "react"
 import { db } from "./firebase"
-import {addDoc, collection, deleteDoc,doc, getDocs } from "firebase/firestore"
+import { collection, deleteDoc,doc, getDocs } from "firebase/firestore"
 import CartList from "./CartList";
 import Swal from 'sweetalert2'
+import BuyForm from "./BuyForm";
 
 const Cart = () => {
-
-    const [message, setMessage] = useState('')
+    const [result, setResult] = useState('')
     const [products, setProducts] = useState([])
     const [totalPrice, setTotalPrice] = useState(0)
     const [totalQuantity, setTotalQuantity] = useState(0)
-    const [purchasing, setPurchasing] = useState(false)
-    const [emptying, setEmptying] = useState(false)
-    
 
     const getData = async () => {
         const cartItems = await getDocs(collection(db, "cart"));
         let prodsInCart = []
         cartItems.forEach((prod) => {
-            let alreadyAdded = prodsInCart.find((item)=>item.productID == prod.data().productID)
+            let alreadyAdded = prodsInCart.find((item)=>item.productID === prod.data().productID)
             if (alreadyAdded !== undefined) {
-                let index = prodsInCart.findIndex(elem => elem.productID == prod.data().productID)
+                let index = prodsInCart.findIndex(elem => elem.productID === prod.data().productID)
                 prodsInCart[index].quantity += prod.data().quantity
             }else {
                 let data = prod.data()
@@ -36,9 +33,7 @@ const Cart = () => {
         getData()
     },[])
 
-    const emptyCart = async(showloader=null) => {
-        if (showloader)
-            setEmptying(true)
+    const emptyCart = async() => {
 
         const cartItems = await getDocs(collection(db, "cart"));
 
@@ -58,33 +53,10 @@ const Cart = () => {
         setTotalPrice(products.reduce(((total,prod)=> ((prod.price*prod.quantity)+total)),0))
     },[products])
 
-    const handleBuy = () =>{
-        setPurchasing(true)
-        async function saveOnFirebase(){
-            const result = await addDoc(collection(db, "orders"), {products, totalPrice, created_at:new Date()});
-            
-            setPurchasing(false)
-
-            if (result.id) {
-                await emptyCart()
-                
-                setProducts([])
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Compra exitosa',
-                    showConfirmButton: false,
-                    timer: 2000
-                  })
-            }
-        }
     
-        saveOnFirebase()
-    }
 
     const handleEmptyCart = async ()=>{
         await emptyCart(true)
-        setEmptying(false)
         setProducts([])
         Swal.fire({
             position: 'center',
@@ -106,46 +78,30 @@ const Cart = () => {
         });
 
     }
+
+    const handleFinishBuy = (val) => {
+        setResult(val)
+    }
     
     return (
         <div className="cartListContainer">
             {
-                message !== '' ?
-                    message :
+                 products.length && result === '' ?
                     <>
-                        <CartList prods={products} quantity={totalQuantity} totalPrice={totalPrice} removeProduct={handleRemoveProd} />  
-                        {
-                            products.length ?
-                            <div className="cart-btn-section">
-
-                                {
-                                    emptying ?
-                                        <button className="btn btn-dark btn-empty" disabled>
-                                            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                            Vaciando...
-                                        </button>
-                                    :
-                                            <button className="btn btn-dark btn-empty" onClick={handleEmptyCart}>Vaciar carrito</button>
-                                }
-                                
-
-                                {
-                                    purchasing ?
-                                        <button className="btn btn-dark btn-buy" disabled>
-                                            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                            Comprando...
-                                        </button>
-                                    :
-                                        <button className="btn btn-dark btn-cart" onClick={handleBuy}>Finalizar compra</button>
-                                }                                                    
-                                
-                               
-                            </div>
-                                
-                            : null
-                        }
+                        <CartList prods={products} quantity={totalQuantity} totalPrice={totalPrice} removeProduct={handleRemoveProd} emptyCart={handleEmptyCart} /> 
                         
+                        
+                                <BuyForm products={products} totalPrice handleFinishBuy={handleFinishBuy} emptyCart={handleEmptyCart} />
                     </>
+                    : (result !== '' ?
+                            <div className="alert alert-success text-center successBuyMsg" role="alert">
+                                        {result}
+                            </div>
+                        : 
+                        <div className="alert alert-dark text-center noItemsCartMsg" role="alert">
+                                        No hay productos en el cart
+                            </div>
+                            )    
             }
         </div>
     )

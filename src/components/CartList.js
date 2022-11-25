@@ -1,6 +1,8 @@
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CartListItem from './CartListItem'
 
-export default function CartList({prods, quantity, totalPrice, removeProduct}) {
+export default function CartList({prods, quantity, totalPrice, removeProduct, emptyCart}) {
 
     return <table className="table container table-striped table-dark">
                 <thead>
@@ -9,6 +11,16 @@ export default function CartList({prods, quantity, totalPrice, removeProduct}) {
                     <th scope="col">Cantidad</th>
                     <th scope="col">Precio unitario</th>
                     <th scope="col">Acciones</th>
+                    {
+                        prods.length ?
+                            <th onClick={emptyCart} scope="col" className='emptyCartBtn'>
+                                <FontAwesomeIcon className='icon trash-icon' icon={faTrash}/>
+                                &nbsp;
+                                Vaciar
+                            </th>
+                            : null
+                    }
+                    
                     </tr>
                 </thead>
                 <tbody>

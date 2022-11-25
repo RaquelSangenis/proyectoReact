@@ -14,6 +14,7 @@ export default function CartListItem({prod, removeProd}) {
                 </td>
                 : <td></td>
             }
+            <td></td>
                
         </tr>
 }

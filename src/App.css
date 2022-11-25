@@ -89,6 +89,28 @@ main{
     width: 20%;
     text-align: center;
 }
+.buyFormContainer {
+    width: 80%;
+    margin: auto;
+}
+.buyForm {
+    display: flex;
+    flex-direction: column;
+}
+.buyButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.buyButton button {
+    justify-content: center;
+}
+.emptyCartBtn {
+    cursor: pointer;
+}
+.successBuyMsg, .noItemsCartMsg {
+    margin: 50px 50px 0 50px;
+}
 #footer{
     font-family: 'Roboto Condensed', sans-serif;
     text-align: center;
